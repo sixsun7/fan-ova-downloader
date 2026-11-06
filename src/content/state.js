@@ -1,0 +1,48 @@
+'use strict';
+
+// Shared state for the isolated-world content scripts. Loaded first.
+var Fanova = {
+  SVG: {
+    download: '<svg viewBox="0 0 24 24"><path d="M12 3v13"/><path d="M7 10l5 5 5-5"/><path d="M3 17v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3"/></svg>',
+    open: '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>',
+    spinner: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>'
+  },
+  RESERVED_PATHS: ['creators', 'me', 'feed', 'messages', 'notifications', 'settings'],
+  DEFAULT_FOLDER: 'Fanova',
+  COLLECT_DELAY_MS: 3000,
+  COLLECT_MAX_PAGES: 80,
+  COLLECT_IDLE_ROUNDS: 3,
+  COLLECT_MAX_FILES: 1500,
+  overlay: null,
+  btnDownload: null,
+  btnOpen: null,
+  currentMedia: null,
+  hideTimer: null,
+  rafPending: false,
+  lastEvent: null,
+  apiUrls: new Set(),
+  thumbToVideo: new Map(),
+  commentStamps: new Map(),
+  postStamps: new Map(),
+  datedRoots: new WeakSet(),
+  commentFuzzyCache: { size: -1, map: new Map() },
+  lastFeed: null,
+  libraryPosts: new Map(),
+  libraryHandle: null,
+  collectPanel: null,
+  collectStatusEl: null,
+  collectStartBtn: null,
+  collectStopBtn: null,
+  collectCopyBtn: null,
+  collectTxtBtn: null,
+  collectFab: null,
+  collectHidden: false,
+  collectRunning: false,
+  collectCancelled: false,
+  collectWaiters: new Map(),
+  badgeRafPending: false,
+  commentSheetWasOpen: false,
+  postBackdrop: null,
+  postBodyEl: null,
+  postTitleEl: null
+};

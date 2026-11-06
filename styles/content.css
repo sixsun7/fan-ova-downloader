@@ -1,0 +1,417 @@
+/* Fanova Media Downloader — non-invasive overlay styles */
+.fanova-dl-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none !important;
+  z-index: 2147483647;
+}
+
+.fanova-dl-group {
+  position: fixed;
+  display: none;
+  gap: 8px;
+  pointer-events: auto !important;
+  z-index: 2147483647;
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.14s ease, transform 0.14s cubic-bezier(0.22,1,0.36,1);
+}
+
+.fanova-dl-group.visible {
+  display: flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.fanova-dl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(0,0,0,0.78);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.14s, transform 0.14s, border-color 0.14s;
+  padding: 0;
+}
+
+.fanova-dl-btn.primary {
+  background: linear-gradient(135deg, #F58529 0%, #DD2A7B 55%, #8134AF 100%);
+  border-color: rgba(255,255,255,0.35);
+}
+
+.fanova-dl-btn:hover {
+  background: #0095f6;
+  border-color: #0095f6;
+  transform: scale(1.06);
+  box-shadow: 0 6px 24px rgba(0,149,246,0.5);
+}
+
+.fanova-dl-btn.primary:hover {
+  background: linear-gradient(135deg, #ff9a4a 0%, #e8408a 55%, #9a4ac0 100%);
+  border-color: #ff9a4a;
+}
+
+.fanova-dl-btn:active { transform: scale(0.94); }
+
+.fanova-dl-btn svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.fanova-dl-btn.tooltip { position: relative; }
+.fanova-dl-btn.tooltip::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font: 500 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: rgba(0,0,0,0.92);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+}
+.fanova-dl-btn.tooltip:hover::after { opacity: 1; }
+.fanova-dl-btn.loading svg { animation: fanova-spin 0.8s linear infinite; }
+
+@keyframes fanova-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.fanova-dl-comment-date {
+  font-size: 10px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #8b93a3;
+  margin-left: 6px;
+}
+
+.fanova-dl-inline-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: #c9a0ff;
+  white-space: nowrap;
+}
+
+.fanova-dl-notification {  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font: 500 13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  z-index: 2147483647;
+  animation: fanova-slide-in 0.3s cubic-bezier(0.22,1,0.36,1);
+  backdrop-filter: blur(8px);
+  transition: opacity 0.25s, transform 0.25s;
+}
+
+@keyframes fanova-slide-in {
+  from { opacity:0; transform: translateY(16px) scale(0.96); }
+  to { opacity:1; transform: translateY(0) scale(1); }
+}
+
+.fanova-dl-collect {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  width: 260px;
+  padding: 12px 12px 10px;
+  background: rgba(15, 15, 18, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  color: #eee;
+  z-index: 2147483646;
+  pointer-events: auto;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  font: 500 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.fanova-dl-collect.running {
+  border-color: #0095f6;
+}
+
+.fanova-dl-collect-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.fanova-dl-collect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.fanova-dl-collect-hide {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+}
+
+.fanova-dl-collect-hide:hover {
+  color: #fff;
+  border-color: #0095f6;
+}
+
+.fanova-dl-collect-fab {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2147483646;
+  background: rgba(15, 15, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  color: #aaa;
+  cursor: pointer;
+  font: 600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  opacity: 0.7;
+  padding: 6px 12px;
+}
+
+.fanova-dl-collect-fab:hover {
+  opacity: 1;
+  color: #fff;
+  border-color: #0095f6;
+}
+
+.fanova-dl-collect-fab.running {
+  border-color: #0095f6;
+  color: #fff;
+  opacity: 1;
+}
+
+.fanova-dl-collect-status {
+  color: #aaa;
+  font-size: 11px;
+  line-height: 1.35;
+  min-height: 30px;
+  margin-bottom: 8px;
+}
+
+.fanova-dl-collect-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fanova-dl-collect-start,
+.fanova-dl-collect-stop {
+  flex: 1 1 40%;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 6px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.fanova-dl-collect-start {
+  background: #0095f6;
+  color: #fff;
+}
+
+.fanova-dl-collect-start:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.fanova-dl-collect-stop {
+  background: #2a2a30;
+  color: #ccc;
+}
+
+.fanova-dl-collect-stop:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.fanova-dl-collect-hint {
+  margin-top: 8px;
+  color: #777;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.fanova-dl-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding-bottom: 6px;
+  background: rgba(15, 15, 18, 0.97);
+}
+
+.fanova-dl-sheet-title {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.fanova-dl-sheet-hide {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  color: #aaa;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+}
+
+.fanova-dl-sheet-hide:hover {
+  color: #fff;
+  border-color: #0095f6;
+}
+
+.fanova-dl-sheet-status {
+  color: #aaa;
+  font-size: 11px;
+  line-height: 1.35;
+  margin-bottom: 8px;
+}
+
+.fanova-dl-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.fanova-dl-sheet-section-title {
+  margin-bottom: 6px;
+  color: #888;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.fanova-dl-sheet-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fanova-dl-sheet-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fanova-dl-sheet-label {
+  color: #888;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.fanova-dl-sheet-value {
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.fanova-dl-sheet-bio {
+  margin: 0;
+  color: #ddd;
+  font-weight: 500;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.fanova-dl-sheet-hint {
+  margin-top: 8px;
+  color: #777;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+.fanova-dl-post-info-btn {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  color: #c9a0ff;
+  cursor: pointer;
+  font: 600 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 16px;
+  white-space: nowrap;
+  vertical-align: middle;
+  pointer-events: auto;
+}
+
+.fanova-dl-post-info-btn:hover {
+  color: #fff;
+  border-color: #0095f6;
+}
+
+.fanova-dl-post-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: rgba(0, 0, 0, 0.55);
+  pointer-events: auto;
+}
+
+.fanova-dl-post button {
+  user-select: none;
+}
+
+.fanova-dl-post {
+  position: relative;
+  width: min(440px, 100%);
+  max-height: min(82vh, 760px);
+  overflow-y: auto;
+  padding: 12px 14px 12px;
+  background: rgba(15, 15, 18, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  color: #eee;
+  pointer-events: auto;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+  font: 500 12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: text;
+}
+
+/* Full caption inside the post modal: the panel itself scrolls, so the
+   caption must not get its own scrollbar / cut-off box. */
+.fanova-dl-post .fanova-dl-sheet-bio {
+  max-height: none;
+  overflow: visible;
+}
+

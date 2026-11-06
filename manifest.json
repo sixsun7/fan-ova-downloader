@@ -1,0 +1,56 @@
+{
+  "manifest_version": 3,
+  "name": "Fanova Media Downloader",
+  "version": "1.0.8",
+  "description": "Download original Fanova images and videos at maximum quality, organized under a Fanova/ folder.",
+  "permissions": ["downloads", "contextMenus", "storage", "tabs"],
+  "host_permissions": [
+    "*://*.fanova.com/*",
+    "*://*.fanova.io/*",
+    "*://*.fbcdn.net/*",
+    "*://*.cdninstagram.com/*",
+    "*://*.fna.fbcdn.net/*",
+    "*://*.imagekit.io/*",
+    "*://ik.imagekit.io/*",
+    "*://*.supabase.co/*",
+    "*://*.cloudfront.net/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background/sw.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.fanova.com/*"],
+      "js": [
+        "src/content/state.js",
+        "src/content/messages.js",
+        "src/content/overlay.js",
+        "src/content/dates.js",
+        "src/content/post-info.js",
+        "src/content/media.js",
+        "src/content/library.js",
+        "src/content/collect.js",
+        "src/content/boot.js"
+      ],
+      "css": ["styles/content.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_title": "Fanova Downloader",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/icon.svg", "src/page/inject.js"],
+      "matches": ["*://*.fanova.com/*"]
+    }
+  ]
+}
