@@ -46,3 +46,15 @@ var Fanova = {
   postBodyEl: null,
   postTitleEl: null
 };
+
+// Reloading the extension kills this content script's connection. chrome.*
+// then throws "Extension context invalidated" until the Fanova tab is refreshed.
+Fanova.contextAlive = function () {
+  try {
+    return !!(chrome.runtime && chrome.runtime.id);
+  } catch (err) {
+    return false;
+  }
+};
+
+Fanova.RELOAD_TAB_MSG = 'Extension was reloaded. Refresh this Fanova tab.';

@@ -179,11 +179,15 @@ Fanova.requestCollectPage = function (url) {
 
 Fanova.downloadUrlDirect = async function (url) {
   const isVideo = Fanova.isVideoUrl(url);
+  if (!Fanova.contextAlive()) {
+    return { ok: false, error: Fanova.RELOAD_TAB_MSG };
+  }
   let folder = Fanova.DEFAULT_FOLDER;
   try {
     const st = await chrome.storage.sync.get(['customFolder']);
     if (st.customFolder) folder = st.customFolder.replace(/\/+$/, '');
   } catch (err) {
+    if (!Fanova.contextAlive()) return { ok: false, error: Fanova.RELOAD_TAB_MSG };
     console.warn('[Fanova Downloader] failed to read custom folder', err);
   }
   let filename = Fanova.buildFilename(url, isVideo);

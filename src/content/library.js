@@ -506,11 +506,15 @@ Fanova.getLibraryListFilename = function (creator) {
 }
 
 Fanova.saveLibraryListFile = async function (txt, creator) {
+  if (!Fanova.contextAlive()) {
+    return { ok: false, error: Fanova.RELOAD_TAB_MSG };
+  }
   let folder = Fanova.DEFAULT_FOLDER;
   try {
     const st = await chrome.storage.sync.get(['customFolder']);
     if (st.customFolder) folder = st.customFolder.replace(/\/+$/, '');
   } catch (err) {
+    if (!Fanova.contextAlive()) return { ok: false, error: Fanova.RELOAD_TAB_MSG };
     console.warn('[Fanova Downloader] failed to read custom folder', err);
   }
   let filename = Fanova.getLibraryListFilename(creator);

@@ -360,11 +360,19 @@ Fanova.downloadMedia = async function (media) {
       return;
     }
     const isVideo = isVideoThumb || /\.mp4|\.m3u8|\.mpd/i.test(url);
+    if (!Fanova.contextAlive()) {
+      Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+      return;
+    }
     let folder = Fanova.DEFAULT_FOLDER;
     try {
       const st = await chrome.storage.sync.get(['customFolder']);
       if (st.customFolder) folder = st.customFolder.replace(/\/+$/, '');
     } catch (err) {
+      if (!Fanova.contextAlive()) {
+        Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+        return;
+      }
       console.warn('[Fanova Downloader] failed to read custom folder', err);
     }
     let filename = Fanova.buildFilename(url, isVideo, Fanova.getMediaFallbackUrl(media));
@@ -381,6 +389,10 @@ Fanova.downloadMedia = async function (media) {
       }
     });
   } catch (err) {
+    if (!Fanova.contextAlive()) {
+      Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+      return;
+    }
     console.error('[Fanova Downloader] download failed', err);
     Fanova.notify('Download failed', true);
   } finally {
