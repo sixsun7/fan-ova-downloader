@@ -22,20 +22,8 @@ Fanova.buildUi = function () {
   group.className = 'fanova-dl-group';
   Fanova.overlay.appendChild(group);
 
-  Fanova.btnDownload = document.createElement('button');
-  Fanova.btnDownload.className = 'fanova-dl-btn primary tooltip';
-  Fanova.btnDownload.dataset.tooltip = 'Download original (Alt+D)';
-  Fanova.btnDownload.innerHTML = Fanova.SVG.download;
-  Fanova.btnDownload.setAttribute('aria-label', 'Download original image or video');
-  Fanova.btnDownload.addEventListener('click', (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    const media = Fanova.resolveCurrentMedia();
-    if (media) Fanova.downloadMedia(media);
-  });
-
   Fanova.btnOpen = document.createElement('button');
-  Fanova.btnOpen.className = 'fanova-dl-btn tooltip';
+  Fanova.btnOpen.className = 'fanova-dl-btn primary tooltip';
   Fanova.btnOpen.dataset.tooltip = 'Open original (Alt+O)';
   Fanova.btnOpen.innerHTML = Fanova.SVG.open;
   Fanova.btnOpen.setAttribute('aria-label', 'Open original in a new tab');
@@ -46,7 +34,7 @@ Fanova.buildUi = function () {
     if (media) Fanova.openMedia(media);
   });
 
-  group.append(Fanova.btnDownload, Fanova.btnOpen);
+  group.append(Fanova.btnOpen);
   Fanova.overlay._group = group;
 }
 
@@ -205,23 +193,21 @@ Fanova.scheduleHide = function () {
 }
 
 Fanova.isOverButtons = function () {
-  return Fanova.btnDownload.matches(':hover') || Fanova.btnOpen.matches(':hover') || Fanova.overlay._group.matches(':hover');
+  return Fanova.btnOpen.matches(':hover') || Fanova.overlay._group.matches(':hover');
 }
 
 Fanova.showFor = function (media) {
   const rect = media.getBoundingClientRect();
   if (rect.width < 50 || rect.height < 50) return;
   const group = Fanova.overlay._group;
-  let x = rect.right - 96;
+  let x = rect.right - 50;
   let y = rect.top + 8;
-  x = Math.max(8, Math.min(x, window.innerWidth - 100));
+  x = Math.max(8, Math.min(x, window.innerWidth - 58));
   y = Math.max(8, Math.min(y, window.innerHeight - 50));
   group.style.left = x + 'px';
   group.style.top = y + 'px';
   const isVideoThumb = media.tagName === 'VIDEO' || Fanova.isVideoThumbnail(media) || (media.tagName === 'IMG' && Fanova.findVideoIndicatorNear(media));
-  Fanova.btnDownload.dataset.tooltip = isVideoThumb ? 'Download original VIDEO (Alt+D)' : 'Download original image (Alt+D)';
   Fanova.btnOpen.dataset.tooltip = isVideoThumb ? 'Open original VIDEO (Alt+O)' : 'Open original image (Alt+O)';
-  Fanova.btnDownload.style.background = isVideoThumb ? 'linear-gradient(135deg,#ff3b5c 0%,#9a00ff 100%)' : '';
   group.classList.add('visible');
 }
 

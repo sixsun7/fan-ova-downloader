@@ -17,11 +17,7 @@
   .save{background:#0095f6;color:#fff}
   .save:hover{opacity:.9}
   .reset{background:#2a2a30;color:#ccc}
-  .collect{background:linear-gradient(135deg,#F58529,#DD2A7B 55%,#8134AF);color:#fff;margin-top:10px;width:100%;flex:none}
-  .collect:hover{opacity:.9}
   .hint{margin-top:10px;padding:8px 10px;background:#1a1a1f;border-radius:8px;font-size:11px;color:#888;line-height:1.4;border:1px solid #222}
-  .check{display:flex;align-items:center;gap:8px;margin-top:10px;font-weight:500;font-size:12px;color:#aaa;cursor:pointer}
-  .check input{width:auto;accent-color:#0095f6}
   .status{margin-top:8px;font-size:11.5px;color:#4caf50;min-height:14px}
   kbd{background:#222;border:1px solid #333;border-bottom-width:2px;padding:1px 5px;border-radius:4px;font:11px monospace}
 </style>
@@ -37,19 +33,15 @@
     <button class="reset" id="reset">Reset</button>
   </div>
   <div class="status" id="status"></div>
-  <button class="collect" id="collect">Collect library on this profile</button>
-  <label class="check"><input type="checkbox" id="showPanel" checked> Show library panel on Fanova pages</label>
 
   <div class="hint">
-    <b>Usage:</b> hover any photo/video on fanova.com → two buttons appear:<br>
-    • <b>⬇</b> Download to <code id="hintFolder">Fanova/{creator}/</code><br>
+    <b>Usage:</b> hover any photo/video on fanova.com → one button appears:<br>
     • <b>↗</b> Open original in a new tab<br>
-    Right-click → <i>Download original → Fanova folder</i><br><br>
-    Each post shows its exact date next to its time (downloads reuse it in the filename).
+    Right-click → <i>Open original (Fanova)</i> or <i>Download original → <code id="hintFolder">Fanova/{creator}/</code></i><br><br>
+    Each post shows its exact date next to its time.
     Open comments show theirs once loaded.<br><br>
-    Shortcuts: <kbd>Alt+D</kbd> download, <kbd>Alt+O</kbd> open.<br>
-    <b>Collect library</b> walks this profile's posts with a 3s pause between every request and download. Images use the original file URL. Videos use the official file URL. It also saves a <code>links_{date}.txt</code> list (one URL per line, works without login until expiry).<br><br>
-    Files save silently into Chrome's Downloads folder (subfolder above). If Chrome asks for a location on every file, open <code>chrome://settings/downloads</code> and turn off <i>Ask where to save each file before downloading</i>.
+    Shortcut: <kbd>Alt+O</kbd> open.<br><br>
+    Right-click downloads save silently into Chrome's Downloads folder (subfolder above). If Chrome asks for a location on every file, open <code>chrome://settings/downloads</code> and turn off <i>Ask where to save each file before downloading</i>.
   </div>
   <script src="popup.js"></script>
 </body>

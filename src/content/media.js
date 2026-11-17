@@ -409,10 +409,33 @@ Fanova.openMedia = function (media) {
       Fanova.resetOpen();
       return;
     }
-    chrome.runtime.sendMessage({ type: 'OPEN_ORIGINAL', url });
-    Fanova.notify(Fanova.isWatermarkedUrl(url) ? 'Opening watermarked original (server-issued)…' : 'Opening original…', false);
-    Fanova.resetOpen();
+    if (!Fanova.contextAlive()) {
+      Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+      Fanova.resetOpen();
+      return;
+    }
+    chrome.runtime.sendMessage({ type: 'OPEN_ORIGINAL', url }, () => {
+      const lastError = chrome.runtime.lastError;
+      if (lastError) {
+        const message = lastError.message || '';
+        if (!Fanova.contextAlive() || /invalidated/i.test(message)) {
+          Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+        } else {
+          Fanova.notify('Error: ' + message, true);
+        }
+        Fanova.resetOpen();
+        return;
+      }
+      Fanova.notify(Fanova.isWatermarkedUrl(url) ? 'Opening watermarked original (server-issued)…' : 'Opening original…', false);
+      Fanova.resetOpen();
+    });
   }).catch((err) => {
+    const message = err && err.message ? err.message : String(err || '');
+    if (!Fanova.contextAlive() || /invalidated/i.test(message)) {
+      Fanova.notify(Fanova.RELOAD_TAB_MSG, true);
+      Fanova.resetOpen();
+      return;
+    }
     console.error('[Fanova Downloader] open failed', err);
     Fanova.notify('Failed to extract URL', true);
     Fanova.resetOpen();
@@ -420,6 +443,7 @@ Fanova.openMedia = function (media) {
 }
 
 Fanova.setLoading = function (v) {
+  if (!Fanova.btnDownload) return;
   if (v) {
     Fanova.btnDownload.classList.add('loading');
     Fanova.btnDownload.innerHTML = Fanova.SVG.spinner;

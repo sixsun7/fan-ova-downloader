@@ -9,10 +9,7 @@ Fanova.init = function () {
     Fanova.listenExtensionMessages();
     Fanova.buildUi();
     if (window === window.top) {
-      Fanova.buildCollectUi();
       Fanova.buildPostModalUi();
-      Fanova.loadCollectVisibility();
-      Fanova.listenCollectVisibilityChanges();
     }
     Fanova.enableRightClick();
     document.addEventListener('mousemove', Fanova.onMove, true);
@@ -39,10 +36,6 @@ Fanova.injectHook = function () {
 }
 
 Fanova.onKey = function (e) {
-  if (e.altKey && (e.key === 'd' || e.key === 'D') && Fanova.currentMedia) {
-    e.preventDefault();
-    Fanova.downloadMedia(Fanova.currentMedia);
-  }
   if (e.altKey && (e.key === 'o' || e.key === 'O') && Fanova.currentMedia) {
     e.preventDefault();
     Fanova.openMedia(Fanova.currentMedia);
